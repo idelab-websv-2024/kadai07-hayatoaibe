@@ -11,12 +11,28 @@
       results = result.results;
       for (var r of results) {
         var oneline = document.createElement('div');
+        var preview = document.createElement('audio');
         oneline.innerHTML = r["trackName"];
-		oneline.innerHTML += "<br>";
-		// oneline.innerHTML += r["artistName"];
-		oneline.innerHTML += "<hr />";
-		output.appendChild(oneline);
+		    oneline.innerHTML += "<br>";
+		    // oneline.innerHTML += r["artistName"];
+        //AUDIO
+        preview.controls = 'controls';
+        preview.src = r['previewUrl'];	
+        //AUDIO
+        oneline.appendChild(preview);
+        oneline.innerHTML += "<hr />";
+   	    output.appendChild(oneline);
+
       }
+    }
+    function clearOUTPUT(){
+      document.getElementById('outputArea').innerHTML = '';
+    }
+    function searchQuery(input){
+      clearOUTPUT();
+      caller = document.getElementById('caller');
+      inputEnc = encodeURIComponent(input);
+      caller.src = `https://itunes.apple.com/search?term=${inputEnc}&lang=ja_JP&country=JP&callback=searchCallback&limit=10`;
     }
     </script>
 
@@ -26,7 +42,7 @@
 <div id='status'></div>
 <div id='outputArea'></div>
 
-<script id='caller' src='https://itunes.apple.com/search?term=手嶌&lang=ja_JP&country=JP&callback=searchCallback'></script>
+<script id='caller'></script>
 
   </body>
 </html>
